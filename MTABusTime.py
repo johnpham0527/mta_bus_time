@@ -53,10 +53,11 @@ for i in range (0, busesToMonitor):
     arrivalTime = dateTimeParser.parse(jsonText["Siri"]["ServiceDelivery"]["StopMonitoringDelivery"][0]["MonitoredStopVisit"][i]["MonitoredVehicleJourney"]["MonitoredCall"]["ExpectedArrivalTime"])
     stringArrivalTime = str(arrivalTime.time())
 
-    #strip out last 7 characters and save only first 6 (HH:MM)
+    #The MTA Bus Time API returns time in ISO 8601 format. I want to output the time in a more readable 12-hour format. 
+    #This code strips out last 7 characters of the arrival time and saves only first 5 characters (HH:MM). It also assigns AM or PM to the time.
     formattedArrivalTime24Hr = ""
     AMorPM = "AM"
-    for i in range(0, 5):
+    for i in range(0, 5): 
         formattedArrivalTime24Hr += stringArrivalTime[i]
         if i == 1:
             integerTime = int(formattedArrivalTime24Hr)
